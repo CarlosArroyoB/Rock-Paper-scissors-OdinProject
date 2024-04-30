@@ -47,20 +47,40 @@ const playRound = () =>{
             console.log("computer wins");
             computerScore++;
         }
-        console.log(`Human Score: ${humanScore} ---- Computer Score: ${computerScore}`)
+        showResults(humanScore,computerScore,rounds);
     }else{
-        if(computerScore>humanScore){
-            console.log("Computer WINS !!!!")
-            rounds = 0;
-            humanScore = 0;
-            computerScore = 0;
-        } else {
-            console.log("Human WINS !!!!");
-            rounds = 0;
-            humanScore = 0;
-            computerScore = 0;
-        }
+        renderResults(computerScore,humanScore);
+        rounds = 0;
+        humanScore = 0;
+        computerScore = 0;
+    }
+}
+const showResults = (humanScore, computerScore, round) => {
+    const showResultsContainer = document.getElementById("showResults");
+    
+    // Eliminar todos los elementos hijos existentes
+    while (showResultsContainer.firstChild) {
+        showResultsContainer.removeChild(showResultsContainer.firstChild);
     }
     
+    // Crear y agregar el nuevo resultado
+    const result = document.createElement("h4");
+    result.innerHTML = `Round: ${round}  Human Score: ${humanScore} ---- Computer Score: ${computerScore}`;
+    showResultsContainer.appendChild(result);
+}
+
+const renderResults = (computer,human) =>{
+    const showAns = document.getElementById("showAns");
+    const ans = document.createElement("h3");
+    ans.classList.add("ans");
+    
+    if(computer > human){
+        ans.innerHTML = 'Computer WINS!!!'
+    }
+    else{
+        ans.innerHTML = 'Human WINS!!!'
+    }
+    
+    showAns.appendChild(ans);
 }
 playButton.addEventListener("click",playRound);
