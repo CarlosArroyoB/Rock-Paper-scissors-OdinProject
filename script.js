@@ -1,4 +1,4 @@
-const playButton = document.getElementById("playButton");
+
 let humanScore = 0;
 let computerScore = 0;
 let rounds = 0;
@@ -11,15 +11,9 @@ const getComputerChoice = () =>{
         case 2: return "scissors"
     } 
 }
-const getHumanChoice = () =>{
-    const myChoice = (document.getElementById("myChoice").value).toLowerCase();
-    if(myChoice !== 'rock' && myChoice !== 'paper' && myChoice !== 'scissors'){
-        window.alert("You must enter a valid choice");
-    }
-    return myChoice;
-}
-const playRound = () =>{
-    const human = getHumanChoice();
+
+const playRound = function() {
+    const human = this.id;
     const computer = getComputerChoice();
     rounds++;
     console.log(`Human choice: ${human}\nComputer choice: ${computer}`)
@@ -47,15 +41,15 @@ const playRound = () =>{
             console.log("computer wins");
             computerScore++;
         }
-        showResults(humanScore,computerScore,rounds);
+        showScore(humanScore,computerScore,rounds);
     }else{
-        renderResults(computerScore,humanScore);
+        showWinner(computerScore,humanScore);
         rounds = 0;
         humanScore = 0;
         computerScore = 0;
     }
 }
-const showResults = (humanScore, computerScore, round) => {
+const showScore = (humanScore, computerScore, round) => {
     const showResultsContainer = document.getElementById("showResults");
     
     // Eliminar todos los elementos hijos existentes
@@ -69,11 +63,13 @@ const showResults = (humanScore, computerScore, round) => {
     showResultsContainer.appendChild(result);
 }
 
-const renderResults = (computer,human) =>{
+const showWinner = (computer,human) =>{
     const showAns = document.getElementById("showAns");
     const ans = document.createElement("h3");
     ans.classList.add("ans");
-    
+    while(showAns.firstChild){
+        showAns.removeChild(showAns.firstChild);
+    }
     if(computer > human){
         ans.innerHTML = 'Computer WINS!!!'
     }
@@ -83,4 +79,11 @@ const renderResults = (computer,human) =>{
     
     showAns.appendChild(ans);
 }
-playButton.addEventListener("click",playRound);
+const rockButton = document.querySelector("#rock");
+const paperButton = document.querySelector("#paper");
+const scissorsButton = document.querySelector("#scissors");
+
+
+rockButton.addEventListener("click",playRound);
+paperButton.addEventListener("click",playRound);
+scissorsButton.addEventListener("click",playRound);
